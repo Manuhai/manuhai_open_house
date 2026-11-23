@@ -1,0 +1,689 @@
+<title>Manuh AI Open House</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a night-lab hero with an open doorway of light, then a single reading column of journey stops, track switcher and build-day details. */
+:root{
+  --bg:#0d1820; --surface:#13222c; --surface-2:#1a2d39; --line:#2a4150;
+  --fg:#e8f0f2; --muted:#9db3bc;
+  --amber:#ffb547; --amber-ink:#1d1300; --teal:#5fd0d3; --teal-soft:rgba(95,208,211,.12);
+  --good:#6fdc9a; --bad:#ff8a7a;
+  --hero-bg:#0a141b; --hero-fg:#eef6f7; --hero-muted:#a7bfc7;
+  --f-display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --r:14px; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f3f6f7; --surface:#ffffff; --surface-2:#e8eef0; --line:#cfdbdf;
+  --fg:#10212b; --muted:#4d6670;
+  --amber:#b96a00; --amber-ink:#ffffff; --teal:#0a7c83; --teal-soft:rgba(10,124,131,.09);
+  --good:#1f8a4c; --bad:#c0392b; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f3f6f7; --surface:#ffffff; --surface-2:#e8eef0; --line:#cfdbdf;
+  --fg:#10212b; --muted:#4d6670;
+  --amber:#b96a00; --amber-ink:#ffffff; --teal:#0a7c83; --teal-soft:rgba(10,124,131,.09);
+  --good:#1f8a4c; --bad:#c0392b; color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hero-bg)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:clamp(1.5rem,3.4vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.05rem;font-weight:700}
+p{margin:0}
+a{color:var(--teal)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+.eyebrow{font:600 .72rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.lead{color:var(--muted);max-width:62ch;font-size:1.05rem}
+section{padding-block:72px}
+section+section{border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:12px;margin-bottom:32px}
+
+/* nav */
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--hero-bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+nav.top .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font:700 .9rem var(--f-display);color:#ffb547;text-decoration:none;white-space:nowrap}
+.brand img{height:30px;width:auto;display:block}
+.brand span{padding-left:12px;border-left:1px solid rgba(255,255,255,.2)}
+@media (max-width:520px){.brand span{display:none}}
+.themebtn{all:unset;box-sizing:border-box;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--hero-fg);border:1px solid rgba(255,255,255,.22);flex:none}
+.themebtn:hover{border-color:#ffb547;color:#ffb547}
+.themebtn svg{width:18px;height:18px}
+.themebtn .sun{display:none}
+:root[data-theme="dark"] .themebtn .sun{display:block}
+:root[data-theme="dark"] .themebtn .moon{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .themebtn .sun{display:block}:root:not([data-theme="light"]) .themebtn .moon{display:none}}
+.band-logo{height:40px;width:auto;display:block;margin-bottom:18px}
+.navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--hero-muted);text-decoration:none;font-size:.88rem;padding:6px 10px;border-radius:8px;white-space:nowrap}
+.navlinks a:hover{color:var(--hero-fg);background:rgba(255,255,255,.07)}
+.navcta{background:#ffb547;color:#1d1300;font-weight:700;font-size:.85rem;text-decoration:none;padding:8px 14px;border-radius:999px;white-space:nowrap}
+@media (max-width:640px){.navcta{display:none}}
+
+/* hero */
+.hero{position:relative;background:var(--hero-bg);color:var(--hero-fg);overflow:hidden}
+#net{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;padding-block:84px 72px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:40px;align-items:end}
+.hero h1{font-size:clamp(2.4rem,7.4vw,5.2rem);font-weight:800;letter-spacing:-.02em;line-height:.98}
+.hero h1 .door{color:#ffb547;display:block}
+.hero .tag{font-size:clamp(1.1rem,2.2vw,1.35rem);color:var(--hero-fg);margin-top:20px;max-width:34ch}
+.hero .sub{color:var(--hero-muted);margin-top:12px;max-width:52ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 .95rem var(--f-body);padding:12px 20px;border-radius:999px;border:1px solid transparent;cursor:pointer;text-decoration:none}
+.btn.primary{background:#ffb547;color:#1d1300}
+.btn.primary:hover{background:#ffc56e}
+.btn.ghost{background:transparent;color:var(--hero-fg);border-color:rgba(255,255,255,.28)}
+.btn.ghost:hover{border-color:#5fd0d3;color:#5fd0d3}
+.countdown{background:rgba(10,20,27,.72);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:20px;backdrop-filter:blur(6px)}
+.countdown .eyebrow{color:#5fd0d3}
+.countdown .what{font:600 1rem var(--f-body);margin:8px 0 14px;color:var(--hero-fg)}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.cd div{background:rgba(255,255,255,.05);border-radius:10px;padding:10px 4px}
+.cd b{display:block;font:700 1.6rem/1.1 var(--f-mono);color:#ffb547;font-variant-numeric:tabular-nums}
+.cd span{font:500 .66rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--hero-muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font:500 .78rem var(--f-mono);color:var(--hero-muted)}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr;padding-block:56px 48px}}
+
+/* journey */
+.journey{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;position:relative}
+.stop{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:6px;padding:16px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);position:relative}
+.stop:hover{border-color:var(--teal)}
+.stop[aria-selected="true"]{border-color:var(--amber);background:var(--surface-2)}
+.stop .d{font:600 .72rem var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.stop .n{font:700 .92rem/1.25 var(--f-display)}
+.mode{justify-self:start;font:600 .64rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--teal-soft);color:var(--teal)}
+.mode.ip{background:color-mix(in srgb,var(--amber) 16%,transparent);color:var(--amber)}
+.stop .dot{position:absolute;top:-5px;right:12px;width:10px;height:10px;border-radius:50%;background:var(--line)}
+.stop.now .dot{background:var(--amber);box-shadow:0 0 0 4px color-mix(in srgb,var(--amber) 25%,transparent)}
+.stop.past{opacity:.6}
+@media (max-width:900px){.journey{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:480px){.journey{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stopdetail{margin-top:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.stopdetail h3{font-size:1.3rem;margin-bottom:8px}
+.stopdetail ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.stopdetail .meta{font:500 .8rem var(--f-mono);color:var(--muted);margin-bottom:12px}
+@media (max-width:700px){.stopdetail{grid-template-columns:1fr}}
+
+/* gains */
+.gains{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.gain{display:grid;gap:10px;align-content:start}
+.gain svg{width:44px;height:44px}
+.gain p{color:var(--muted);font-size:.95rem}
+@media (max-width:820px){.gains{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.gains{grid-template-columns:1fr}}
+
+/* track switch */
+.switch{display:inline-flex;padding:4px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);gap:4px;flex-wrap:wrap}
+.switch button{all:unset;cursor:pointer;padding:10px 18px;border-radius:999px;font:600 .92rem var(--f-body);color:var(--muted)}
+.switch button[aria-pressed="true"]{background:var(--amber);color:var(--amber-ink)}
+.who{margin-top:14px;color:var(--muted);font-size:.95rem}
+.sessions{display:grid;gap:10px;margin-top:28px}
+.sess{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:18px;align-items:start;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.sess .when{font:600 .8rem/1.5 var(--f-mono);color:var(--teal)}
+.sess .when b{display:block;color:var(--fg);font-size:.9rem}
+.sess h3{font-size:1rem;margin-bottom:4px}
+.sess p{color:var(--muted);font-size:.93rem}
+.sess .try{margin-top:8px;font-size:.88rem;color:var(--fg)}
+.sess .try b{font:600 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-right:6px}
+.sess .num{font:800 1.6rem var(--f-display);color:var(--line)}
+@media (max-width:620px){.sess{grid-template-columns:minmax(0,1fr)}.sess .num{display:none}}
+.tools{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.tool{padding:14px 16px;border-radius:12px;background:var(--teal-soft);display:grid;gap:4px}
+.tool b{font-size:.93rem}
+.tool span{font-size:.85rem;color:var(--muted)}
+.tool.aware{background:transparent;border:1px dashed var(--line)}
+
+/* session anatomy */
+.anat{display:flex;border-radius:12px;overflow:hidden;margin-top:28px;border:1px solid var(--line)}
+.anat div{padding:12px 10px;font-size:.82rem;line-height:1.35;background:var(--surface);border-right:1px solid var(--line);min-width:0}
+.anat div:last-child{border-right:0;background:color-mix(in srgb,var(--amber) 14%,var(--surface))}
+.anat b{display:block;font:600 .72rem var(--f-mono);color:var(--teal);margin-bottom:3px}
+@media (max-width:620px){.anat{flex-direction:column}.anat div{flex:none!important;border-right:0;border-bottom:1px solid var(--line)}}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;margin-top:40px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+td,th{text-align:left;padding:10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+td.pts{text-align:right;font:600 .95rem var(--f-mono);color:var(--amber);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
+
+/* practice */
+.oh{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.oh div{padding:16px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.oh b{display:block;font:700 1rem var(--f-display)}
+.oh span{font-size:.88rem;color:var(--muted)}
+@media (max-width:520px){.oh{grid-template-columns:1fr}}
+ol.pack{margin:0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:p}
+ol.pack li{counter-increment:p;display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:.95rem}
+ol.pack li::before{content:counter(p);font:600 .8rem/1.9 var(--f-mono);color:var(--teal);text-align:center;border:1px solid var(--line);border-radius:8px;height:26px}
+
+/* hackathon */
+.sealed{position:relative;border-radius:var(--r);padding:28px;background:var(--hero-bg);color:var(--hero-fg);overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center}
+.sealed svg{width:84px;height:84px}
+.sealed h3{font-size:1.35rem}
+.sealed p{color:var(--hero-muted);margin-top:8px;max-width:60ch}
+@media (max-width:560px){.sealed{grid-template-columns:1fr}}
+.dayline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.dayline li{display:grid;grid-template-columns:62px 18px minmax(0,1fr);gap:12px;align-items:start}
+.dayline .t{font:600 .85rem/1.6 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.dayline .pin{position:relative;height:100%;min-height:44px}
+.dayline .pin::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--line)}
+.dayline .pin::after{content:"";position:absolute;left:4px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--teal)}
+.dayline li.hl .pin::after{background:var(--amber);border-color:var(--amber)}
+.dayline li.hl .w{font-weight:700}
+.dayline .w{padding-bottom:16px}
+.dayline li:last-child .pin::before{bottom:auto;height:12px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:grid;gap:6px;align-content:start}
+.card .eyebrow{color:var(--amber)}
+.card p{font-size:.93rem;color:var(--muted)}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+
+/* rubric bars */
+.rub{display:grid;gap:12px}
+.rrow{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:4px 12px;align-items:center}
+.rrow .lbl{font-size:.92rem}
+.rrow .val{font:600 .9rem var(--f-mono);color:var(--amber);text-align:right}
+.rrow .bar{grid-column:1/-1;height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.rrow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:999px;transition:width .5s}
+.rrow .hint{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+
+/* showcase */
+.pres{display:flex;border-radius:12px;overflow:hidden;border:1px solid var(--line);margin-top:12px}
+.pres div{padding:10px 8px;font-size:.78rem;line-height:1.3;background:var(--surface);border-right:1px solid var(--line);min-width:0}
+.pres div.q{background:color-mix(in srgb,var(--teal) 14%,var(--surface))}
+.pres b{display:block;font:600 .7rem var(--f-mono);color:var(--amber)}
+@media (max-width:620px){.pres{flex-direction:column}.pres div{flex:none!important;border-right:0;border-bottom:1px solid var(--line)}}
+.awards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.award{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.award svg{width:34px;height:34px}
+.award b{display:block;font-size:.92rem;line-height:1.3}
+.award span{font:500 .72rem var(--f-mono);color:var(--muted)}
+
+/* quiz */
+.quiz{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:28px;display:grid;gap:18px}
+.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.qprog{font:600 .8rem var(--f-mono);color:var(--muted)}
+.qtext{font:700 1.15rem/1.35 var(--f-display);max-width:50ch}
+.opts{display:grid;gap:8px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:.95rem}
+.opt:hover:not([disabled]){border-color:var(--teal)}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--bg))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--bg))}
+.opt[disabled]{cursor:default}
+.why{font-size:.93rem;color:var(--muted);border-left:3px solid var(--amber);padding-left:12px}
+.qnav{display:flex;gap:10px;justify-content:flex-end}
+.btn.solid{background:var(--amber);color:var(--amber-ink)}
+.btn.line{background:transparent;color:var(--fg);border-color:var(--line)}
+
+/* rules, faq */
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
+.rule{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:16px;border-radius:12px;border:1px solid var(--line)}
+.rule svg{width:24px;height:24px;margin-top:2px}
+.rule p{font-size:.93rem;color:var(--muted)}
+.rule b{color:var(--fg)}
+@media (max-width:620px){.rules{grid-template-columns:1fr}}
+details.faq{border-bottom:1px solid var(--line)}
+details.faq summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font:600 1.2rem/1 var(--f-mono);color:var(--teal)}
+details.faq[open] summary::after{content:"–"}
+details.faq p{padding-bottom:18px;color:var(--muted);max-width:68ch}
+
+/* register band */
+.band{background:var(--hero-bg);color:var(--hero-fg)}
+.band .wrap{padding-block:64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center}
+.band h2{color:var(--hero-fg)}
+.band p{color:var(--hero-muted);margin-top:10px;max-width:56ch}
+.steps{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:8px 20px;font:500 .82rem var(--f-mono);color:var(--hero-muted)}
+.steps li b{color:#ffb547;margin-right:6px}
+.regnote{font:500 .8rem var(--f-mono);color:var(--hero-muted);margin-top:10px;text-align:center}
+@media (max-width:700px){.band .wrap{grid-template-columns:1fr}}
+footer{padding-block:32px;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+</style>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMMAAAA5CAYAAACLdp/VAAAACXBIWXMAAC4jAAAuIwF4pT92AAAJ5mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDYgNzkuMTY0NjQ4LCAyMDIxLzAxLzEyLTE1OjUyOjI5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjIgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOS0wNC0yM1QxNjo1MzoyNSswNTozMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ZDY4N2Y2NWUtM2Q1NC1kNDRhLWJjN2ItZjRlZDM0MDEyOWUzIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MWVlMDRkNGItZTJmNy0zOTRkLTgwOTEtZjZlZTQ4Y2E2NTc2IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ZDU0YmQxMDMtNzMwNC03ODQwLThhMWYtMTgzYWRjYjZlMzEwIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkNTRiZDEwMy03MzA0LTc4NDAtOGExZi0xODNhZGNiNmUzMTAiIHN0RXZ0OndoZW49IjIwMTktMDQtMjNUMTY6NTM6MjUrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMi4yIChXaW5kb3dzKSIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY29udmVydGVkIiBzdEV2dDpwYXJhbWV0ZXJzPSJmcm9tIGltYWdlL2Vwc2YgdG8gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MmFjNDRkZTgtNjAzZi04ODRjLTk4NTgtYjE5MjljNTliZWQ3IiBzdEV2dDp3aGVuPSIyMDIxLTAzLTE5VDEyOjM1OjM1KzA1OjMwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgMjIuMiAoV2luZG93cykiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjVkMDQ0NzdlLWIwYTItMWM0Yi05YWIwLTZiOWJlYWQzZmI3OCIgc3RFdnQ6d2hlbj0iMjAyMS0wMy0xOVQxMjozODo1NiswNTozMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIyLjIgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjb252ZXJ0ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmciLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImRlcml2ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImNvbnZlcnRlZCBmcm9tIGFwcGxpY2F0aW9uL3ZuZC5hZG9iZS5waG90b3Nob3AgdG8gaW1hZ2UvcG5nIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkNjg3ZjY1ZS0zZDU0LWQ0NGEtYmM3Yi1mNGVkMzQwMTI5ZTMiIHN0RXZ0OndoZW49IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMi4yIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NWQwNDQ3N2UtYjBhMi0xYzRiLTlhYjAtNmI5YmVhZDNmYjc4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmQ1NGJkMTAzLTczMDQtNzg0MC04YTFmLTE4M2FkY2I2ZTMxMCIgc3RSZWY6b3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOmQ1NGJkMTAzLTczMDQtNzg0MC04YTFmLTE4M2FkY2I2ZTMxMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrKXPUEAAA7MSURBVHic7Z1ptBTFFYC/NzwQFBAUI4uiLIoKAU0ICIhKIhpXEAUkMbjgEiUK7hq3iIkxmqgnBFlcQox4VEyOUYML0SAKQogExAguiAoqiPJQVML2bn7cbqdfTfU60+/N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" alt="Manuh Solutions"><span>AI Open House</span></a>
+    <div class="navlinks">
+      <a href="#journey">Journey</a><a href="#week">AI Week</a><a href="#practice">Practice</a><a href="#hackathon">Hackathon</a><a href="#showcase">Showcase</a><a href="#quiz">Quick check</a><a href="#faq">FAQ</a>
+    </div>
+    <a class="navcta" href="#register">Register</a>
+    <button type="button" class="themebtn" id="themeBtn" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" style="color:#5fd0d3">Manuh Solutions · 30 Nov – 15 Dec 2026</p>
+      <h1 style="margin-top:18px">Manuh<br>AI <span class="door">Open House</span></h1>
+      <p class="tag">Doors open. Come learn, try and build.</p>
+      <p class="sub">Two and a half weeks to get hands-on with AI, whatever your role. Engineers learn to build with it. HR, finance, clinical and operations colleagues learn to work with it. Everyone finishes by building something real.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#register">Register now</a>
+        <a class="btn ghost" href="#journey">See the journey</a>
+      </div>
+    </div>
+    <aside class="countdown" aria-live="polite">
+      <p class="eyebrow">Next up</p>
+      <p class="what" id="cdWhat">Inauguration · Mon 30 Nov, 10:00</p>
+      <div class="cd"><div><b id="cdD">0</b><span>days</span></div><div><b id="cdH">0</b><span>hrs</span></div><div><b id="cdM">0</b><span>min</span></div><div><b id="cdS">0</b><span>sec</span></div></div>
+      <div class="facts"><span>9 live sessions</span><span>2 tracks</span><span>1 hackathon</span></div>
+    </aside>
+  </div>
+</header>
+
+<main>
+<section id="journey"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">The journey</p>
+    <h2>Six stops from first prompt to finished build</h2>
+    <p class="lead">Learn online first, then meet in person to build and show your work. Select a stop to see what happens.</p>
+  </div>
+  <div class="journey" role="tablist" id="journeyStops"></div>
+  <div class="stopdetail" id="stopDetail" role="tabpanel"></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Why join</p>
+    <h2>What you take home</h2>
+  </div>
+  <div class="gains">
+    <div class="gain">
+      <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--teal)"><circle cx="22" cy="22" r="6" fill="var(--teal-soft)"/><circle cx="8" cy="10" r="3"/><circle cx="36" cy="10" r="3"/><circle cx="8" cy="34" r="3"/><circle cx="36" cy="34" r="3"/><path d="M10.5 12 17 18M33.5 12 27 18M10.5 32 17 26M33.5 32 27 26"/></svg>
+      <h3>Real AI skills</h3><p>How these tools work, where they go wrong, and how to get reliable results from them.</p>
+    </div>
+    <div class="gain">
+      <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--amber)"><rect x="6" y="8" width="32" height="24" rx="4"/><path d="M14 18l4 4-4 4M22 26h8"/><path d="M16 38h12"/></svg>
+      <h3>Hands-on practice</h3><p>Every session ends with a task from your own work, so you practise on the job you actually do.</p>
+    </div>
+    <div class="gain">
+      <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--teal)"><circle cx="15" cy="16" r="5"/><circle cx="29" cy="16" r="5"/><path d="M6 36c0-5 4-9 9-9s9 4 9 9M20 36c0-5 4-9 9-9s9 4 9 9"/></svg>
+      <h3>New teammates</h3><p>Hackathon teams mix skills and departments, so you build with people you rarely get to work with.</p>
+    </div>
+    <div class="gain">
+      <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--amber)"><path d="M14 6h16v10a8 8 0 0 1-16 0z"/><path d="M14 9H8v3a6 6 0 0 0 6 6M30 9h6v3a6 6 0 0 1-6 6M22 24v6M15 38h14M17 30h10v8H17z"/></svg>
+      <h3>Recognition</h3><p>Leaderboard points, track awards and a moment on stage on showcase day.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="week"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">AI Week · Tue 1 – Fri 4 Dec · Online</p>
+    <h2>Pick your track</h2>
+    <p class="lead">Two tracks run side by side. You can attend sessions from the other track too. Every session is recorded and posted the same day.</p>
+  </div>
+  <div class="switch" role="group" aria-label="Track">
+    <button type="button" id="tTech" data-track="tech" aria-pressed="true">Technical track</button>
+    <button type="button" id="tNon" data-track="non" aria-pressed="false">Non-technical track</button>
+  </div>
+  <p class="who" id="trackWho"></p>
+  <div class="sessions" id="sessions"></div>
+  <h3 style="margin-top:40px">Tools you'll use</h3>
+  <div class="tools" id="tools"></div>
+
+  <div class="grid2">
+    <div>
+      <h3>Inside every session</h3>
+      <p class="lead" style="font-size:.95rem;margin-top:6px">75 minutes, then a short quiz for leaderboard points.</p>
+      <div class="anat" id="anat"></div>
+    </div>
+    <div>
+      <h3>Leaderboard points</h3>
+      <table style="margin-top:10px"><thead><tr><th>How you earn</th><th style="text-align:right">Points</th></tr></thead><tbody id="points"></tbody></table>
+    </div>
+  </div>
+</div></section>
+
+<section id="practice"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Practice week · Mon 7 – Fri 11 Dec · Online</p>
+    <h2>Practise at your own pace, with help on call</h2>
+    <p class="lead">Work through a practice pack in your own time. Bring questions to open office hours, where mentors help over screen share.</p>
+  </div>
+  <div class="oh" id="oh"></div>
+  <div class="grid2">
+    <div>
+      <h3 id="packTitle">Practice pack</h3>
+      <p class="lead" style="font-size:.9rem;margin:6px 0 14px">Follows the track you picked above.</p>
+      <ol class="pack" id="pack"></ol>
+    </div>
+    <div>
+      <h3>"AI in My Daily Work" challenge</h3>
+      <p class="lead" style="font-size:.95rem;margin:6px 0 14px">Pick one real, repetitive task from your job and redo it with AI. Share a short write-up by Fri 11 Dec for 30 points and a shot at its own award.</p>
+      <ol class="pack">
+        <li>The task and how you do it today</li>
+        <li>How you did it with AI, and the prompts you used</li>
+        <li>Time taken before and after</li>
+        <li>What worked, and the limits you found</li>
+      </ol>
+    </div>
+  </div>
+</div></section>
+
+<section id="hackathon"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Hackathon build day · Mon 14 Dec · In person</p>
+    <h2>One day, one problem, one team</h2>
+    <p class="lead">Teams are formed by the organizers to mix skills and announced on Mon 7 Dec. On the day you pick a problem, build a solution and submit by 17:30.</p>
+  </div>
+  <div class="sealed">
+    <svg viewBox="0 0 84 84" fill="none"><rect x="10" y="18" width="64" height="48" rx="6" stroke="#5fd0d3" stroke-width="2"/><path d="M10 24l32 22 32-22" stroke="#5fd0d3" stroke-width="2"/><circle cx="42" cy="50" r="11" fill="#ffb547"/><path d="M38 50l3 3 6-6" stroke="#1d1300" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <p class="eyebrow" style="color:#ffb547">Sealed until 09:00 on build day</p>
+      <h3 style="margin-top:8px">Problem statements are revealed at kickoff</h3>
+      <p>Every team gets the same start. Expect real workflows from our healthcare work, built only on synthetic or public data. Each problem has three levels, so beginners can finish and strong teams can go further.</p>
+    </div>
+  </div>
+  <div class="grid2">
+    <div>
+      <h3 style="margin-bottom:16px">The day</h3>
+      <ul class="dayline" id="hackDay"></ul>
+    </div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <h3>What your team builds</h3>
+      <div class="cards" id="deliv" style="grid-template-columns:1fr"></div>
+    </div>
+  </div>
+  <div style="margin-top:48px">
+    <h3>How you're judged</h3>
+    <p class="lead" style="font-size:.95rem;margin:6px 0 20px" id="rubLead"></p>
+    <div class="rub" id="rubric"></div>
+  </div>
+</div></section>
+
+<section id="showcase"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Showcase and closing · Tue 15 Dec · In person</p>
+    <h2>Show what you built</h2>
+    <p class="lead">Each team gets 10 minutes in front of the judges, then we look back on the program and hand out the awards.</p>
+  </div>
+  <h3>Your 10 minutes</h3>
+  <div class="pres" id="pres"></div>
+  <div class="grid2">
+    <div>
+      <h3 style="margin-bottom:16px">The day</h3>
+      <ul class="dayline" id="showDay"></ul>
+    </div>
+    <div>
+      <h3 style="margin-bottom:16px">Awards</h3>
+      <div class="awards" id="awards"></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="quiz"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Warm-up</p>
+    <h2>Quick check: are you AI-ready?</h2>
+    <p class="lead">Four questions on using AI safely and well. Nothing is recorded; it's just for you.</p>
+  </div>
+  <div class="quiz" id="quizBox"></div>
+  <h3 style="margin-top:48px">House rules</h3>
+  <div class="rules">
+    <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p><b>No real patient, employee or client data.</b> Use synthetic or approved sample data only, in every tool.</p></div>
+    <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><p><b>Approved tools only.</b> IT confirms the list before AI Week. If you're unsure about a tool, ask first.</p></div>
+    <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><p><b>Check what AI gives you.</b> It can sound sure and still be wrong. Verify facts, numbers and citations.</p></div>
+    <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><p><b>You own the result.</b> AI helps you do the work; you're still accountable for what you share or ship.</p></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Questions</p>
+    <h2>FAQ</h2>
+  </div>
+  <div id="faqList"></div>
+</div></section>
+</main>
+
+<div class="band" id="register">
+  <div class="wrap">
+    <div>
+      <img class="band-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMMAAAA5CAYAAACLdp/VAAAACXBIWXMAAC4jAAAuIwF4pT92AAAJ5mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDYgNzkuMTY0NjQ4LCAyMDIxLzAxLzEyLTE1OjUyOjI5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjIgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOS0wNC0yM1QxNjo1MzoyNSswNTozMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ZDY4N2Y2NWUtM2Q1NC1kNDRhLWJjN2ItZjRlZDM0MDEyOWUzIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MWVlMDRkNGItZTJmNy0zOTRkLTgwOTEtZjZlZTQ4Y2E2NTc2IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ZDU0YmQxMDMtNzMwNC03ODQwLThhMWYtMTgzYWRjYjZlMzEwIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkNTRiZDEwMy03MzA0LTc4NDAtOGExZi0xODNhZGNiNmUzMTAiIHN0RXZ0OndoZW49IjIwMTktMDQtMjNUMTY6NTM6MjUrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMi4yIChXaW5kb3dzKSIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY29udmVydGVkIiBzdEV2dDpwYXJhbWV0ZXJzPSJmcm9tIGltYWdlL2Vwc2YgdG8gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MmFjNDRkZTgtNjAzZi04ODRjLTk4NTgtYjE5MjljNTliZWQ3IiBzdEV2dDp3aGVuPSIyMDIxLTAzLTE5VDEyOjM1OjM1KzA1OjMwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgMjIuMiAoV2luZG93cykiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjVkMDQ0NzdlLWIwYTItMWM0Yi05YWIwLTZiOWJlYWQzZmI3OCIgc3RFdnQ6d2hlbj0iMjAyMS0wMy0xOVQxMjozODo1NiswNTozMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIyLjIgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjb252ZXJ0ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmciLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImRlcml2ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImNvbnZlcnRlZCBmcm9tIGFwcGxpY2F0aW9uL3ZuZC5hZG9iZS5waG90b3Nob3AgdG8gaW1hZ2UvcG5nIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkNjg3ZjY1ZS0zZDU0LWQ0NGEtYmM3Yi1mNGVkMzQwMTI5ZTMiIHN0RXZ0OndoZW49IjIwMjEtMDMtMTlUMTI6Mzg6NTYrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMi4yIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NWQwNDQ3N2UtYjBhMi0xYzRiLTlhYjAtNmI5YmVhZDNmYjc4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmQ1NGJkMTAzLTczMDQtNzg0MC04YTFmLTE4M2FkY2I2ZTMxMCIgc3RSZWY6b3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOmQ1NGJkMTAzLTczMDQtNzg0MC04YTFmLTE4M2FkY2I2ZTMxMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PrKXPUEAAA7MSURBVHic7Z1ptBTFFYC/NzwQFBAUI4uiLIoKAU0ICIhKIhpXEAUkMbjgEiUK7hq3iIkxmqgnBFlcQox4VEyOUYML0SAKQogExAguiAoqiPJQVML2bn7cbqdfTfU60+/N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" alt="Manuh Solutions">
+      <p class="eyebrow" style="color:#5fd0d3">Registration · closes Fri 27 Nov</p>
+      <h2 style="margin-top:10px">Come through the door</h2>
+      <p>Registration takes about 3 minutes. Your answers help us pick topics, set the level of each session and form balanced teams.</p>
+      <ul class="steps"><li><b>1</b>Register and fill in the short survey</li><li><b>2</b>Get calendar invites</li><li><b>3</b>Join the inauguration on 30 Nov</li></ul>
+    </div>
+    <div>
+      <a class="btn primary" id="regBtn" href="#register" style="font-size:1.05rem;padding:16px 28px">Open the registration form</a>
+      <p class="regnote" id="regNote"></p>
+    </div>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  <span>Manuh AI Open House · Manuh Solutions · 2026</span>
+  <span>Questions? Ask the organizing team in the event's Teams channel.</span>
+</div></footer>
+
+<script>
+/* ---------- Settings: paste the registration form link here ---------- */
+const REGISTER_URL = '';
+
+/* ---------- Content ---------- */
+const stops=[
+ {d:'By Fri 27 Nov',n:'Register',m:'Online',start:'2026-11-01T00:00',end:'2026-11-27T23:59',
+  body:['Fill in the registration form and short survey','Tell us your skills, your comfort with AI and the topics you want most','Name one repetitive task you would like AI to help with'],
+  side:'Your answers shape session levels, the final topic list and the hackathon teams.'},
+ {d:'Mon 30 Nov · 10:00',n:'Inauguration',m:'Online',start:'2026-11-30T10:00',end:'2026-11-30T11:00',
+  body:['Welcome and an executive address on why AI matters for Manuh','Objectives, the AI Week agenda and the 3-week roadmap','Safe-use rules','A fun AI game: Human or AI?, a prompt battle or spot the hallucination'],
+  side:'One hour on Teams. Bring your curiosity and your phone for the live polls.'},
+ {d:'Tue 1 – Fri 4 Dec',n:'AI Week',m:'Online',start:'2026-12-01T00:00',end:'2026-12-04T23:59',
+  body:['9 live sessions of 75 minutes across two tracks','A short practice task after every session','A quick quiz for leaderboard points','Recordings posted the same day'],
+  side:'Technical sessions at 10:00 and 14:00, non-technical sessions at 16:00. See the full list below.'},
+ {d:'Mon 7 – Fri 11 Dec',n:'Practice week',m:'Online',start:'2026-12-07T00:00',end:'2026-12-11T23:59',
+  body:['Practice pack for your track','Open office hours on Mon, Wed and Fri','Hackathon teams announced on Mon 7 Dec','Setup check on Fri 11 Dec so your laptop is ready'],
+  side:'Work at your own pace. Also the week for the "AI in My Daily Work" challenge.'},
+ {d:'Mon 14 Dec',n:'Hackathon',m:'In person',start:'2026-12-14T08:30',end:'2026-12-14T18:00',
+  body:['Check-in and breakfast from 08:30','Problem statements revealed at 09:00','Build with mentors on hand','Submit by 17:30'],
+  side:'A full day in the office. Teams mix skills and departments.'},
+ {d:'Tue 15 Dec',n:'Showcase',m:'In person',start:'2026-12-15T09:30',end:'2026-12-15T14:30',
+  body:['10-minute presentation and demo per team','Key takeaways from the program','Awards','Launch of the 30-day AI adoption challenge'],
+  side:'Present, celebrate, and keep the habit going after the event.'}
+];
+const milestones=[
+ ['Registration closes · Fri 27 Nov','2026-11-27T23:59'],
+ ['Inauguration · Mon 30 Nov, 10:00','2026-11-30T10:00'],
+ ['First AI Week session · Tue 1 Dec, 10:00','2026-12-01T10:00'],
+ ['Practice week · Mon 7 Dec','2026-12-07T09:00'],
+ ['Hackathon kickoff · Mon 14 Dec, 09:00','2026-12-14T09:00'],
+ ['Showcase · Tue 15 Dec, 09:30','2026-12-15T09:30']
+];
+const tracks={
+ tech:{who:'For software engineers and data people: Java, SQL, Python, front end, QA and AI/NLP. No prior AI experience needed.',
+  sessions:[
+   ['Tue 1 Dec','10:00','GenAI foundations','How LLMs work, where they fail, the tools we use, and safe-use rules.','Spot the hallucination in 3 AI answers about our tech stack.'],
+   ['Tue 1 Dec','14:00','Prompt and context engineering for developers','Structured prompts, giving the assistant context, and instruction files for your repo.','Write an instruction file for your repo and fix one bug with it.'],
+   ['Wed 2 Dec','14:00','AI in everyday engineering','Understand legacy Java, generate tests, refactor, review PRs and write SQL with AI.','Generate tests for a real module and review one PR with AI.'],
+   ['Thu 3 Dec','14:00','Spec-driven and agentic engineering','Spec, plan, tasks; agents, tools and MCP, with human checkpoints.','Turn a user story into a spec and let an agent build it.'],
+   ['Fri 4 Dec','10:00','Calling LLMs from Python','LLM APIs, prompts as code, structured JSON output, tool calling, cost and speed.','Build a small Python endpoint that extracts JSON from text.'],
+   ['Fri 4 Dec','14:00','RAG, evals and guardrails','Grounding answers in documents, measuring accuracy with a test set, and safety guardrails.','Build a small RAG over policy documents and score it on 10 questions.']],
+  tools:[['GitHub Copilot','Completions, chat and agent mode in your IDE'],['Claude and Claude Code','Reasoning, code explanation, agentic tasks'],['LLM API keys','For building AI features in Python'],['Python, pandas, FastAPI, Streamlit','The hackathon stack, in a starter repo']],
+  aware:[],
+  pack:['Load a sample CSV with pandas and answer 5 questions, letting AI write the code','Extract structured JSON from 5 synthetic notes','Write a spec for a small feature, then let the assistant build it with tests','Let an agent add an API endpoint and tests to the starter repo','Hackathon dry run: UI, then API, then LLM call, end to end'],
+  deliv:[['Team','4–5 engineers with mixed skills, plus a floating AI mentor'],['Build','A working solution with a UI, a backend or API, and an AI component, in Python'],['Submit','Code with a README, your outputs, and a short AI journal of how you used AI']],
+  rubLead:'Out of 100. Accuracy, safety and real understanding count for more than a polished demo.',
+  rubric:[['Working solution and level reached',20,'It runs from the README; higher levels earn more'],['Accuracy and safety',20,'Correct results with evidence, no guessing, no real data'],['Clinical and business value',15,'Solves a real workflow someone would use'],['Quality of AI use',15,'AI where it helps, plain code where it does not'],['Team understanding',15,'Any team member can explain the code and a design choice'],['Code quality and teamwork',10,'Readable, documented, everyone contributed'],['Presentation',5,'Clear problem, live demo, on time']]},
+ non:{who:'For HR, finance, clinical, medical and operations colleagues. No coding, ever.',
+  sessions:[
+   ['Tue 1 Dec','16:00','AI made simple, and safe','What GenAI is, what it does well and where it makes things up. Copilot Chat basics, and the data that must never go in.','Ask Copilot 3 questions from your job and check each answer.'],
+   ['Wed 2 Dec','16:00','Getting great answers: Copilot for everyday work','Prompting for writing, summarising and checking, in Outlook, Word, Excel, Teams and PowerPoint, with HR, finance and clinical examples.','Use Copilot on 3 real tasks: an email, a summary and a spreadsheet question.'],
+   ['Thu 3 Dec','16:00','Build your own Copilot agent','A tour of ready-made agents, then build your own with instructions, knowledge files and starter prompts.','Build a simple agent for one recurring task in your team and share it.']],
+  tools:[['Microsoft 365 Copilot Chat','Secure AI chat for work'],['Copilot in Outlook, Word, Excel, Teams','Draft, summarise, rewrite and explain'],['Copilot agent builder','Build no-code agents for your own tasks']],
+  aware:[['For awareness only','NotebookLM, Claude, ChatGPT, Perplexity and clinical evidence tools are shown in demos. Use them for work only if IT approves them.']],
+  pack:['Copilot in Word: turn a long sample policy into a 10-question FAQ','Copilot in Outlook: draft replies to 3 sample queries in two tones','Copilot in Teams: turn a meeting transcript into an action list with owners and dates','Copilot in Excel: explain a budget variance and learn one new formula','Build a Copilot agent for one recurring task and share it with a colleague'],
+  deliv:[['Team','3–4 people from HR, clinical and operations'],['Build','A Copilot agent or AI-assisted workflow. No coding needed'],['Submit','Your agent or workflow, a before/after example, the prompts you used and a short AI journal']],
+  rubLead:'Out of 100. Rewards usefulness and responsible use, not technical skill.',
+  rubric:[['Usefulness for the role',30,'Solves a real task people do every week'],['Measured impact',20,'Time or quality before and after, shown with an example'],['Responsible AI use',20,'No real data, outputs checked, limits stated'],['Reusability and clarity',15,'A colleague could use it tomorrow'],['Presentation and learning',15,'Clear story, live walkthrough, honest lessons']]}
+};
+const anat=[[5,'0–5','Recap and quiz winners'],[35,'5–40','Concepts with Manuh examples'],[25,'40–65','Live demo and hands-on'],[10,'65–75','Q&A and your practice task'],[16,'+15','Live quiz']];
+const points=[['Quiz: correct answer, live',10],['Quiz: correct answer, catch-up',5],['Practice task submitted on time',20],['Task picked as best example','+10'],['Office hours attended',5],['"AI in My Daily Work" entry',30]];
+const oh=[['Mon 7 Dec','Office hours'],['Wed 9 Dec','Office hours'],['Fri 11 Dec','Office hours and setup check']];
+const hackDay=[['08:30','Check-in, breakfast, laptop and Wi-Fi check'],['09:00','Kickoff: problems revealed, guidelines, rubric',1],['09:45','Teams pick one problem'],['10:00','Build, with a mentor check-in from 11:30'],['12:30','Lunch'],['13:15','Build, with a 2-minute status per team at 14:30'],['15:00','Polish, test and prepare slides'],['17:30','Submission deadline',1]];
+const showDay=[['09:30','Opening and judges introduced'],['09:45','Technical track presentations',1],['11:05','Non-technical track presentations',1],['12:00','Lunch while judges finalize scores'],['12:45','Key takeaways from the program'],['13:20','Awards',1],['13:55','30-day challenge launch and feedback'],['14:15','Thank-you and group photo']];
+const pres=[[1,'1 min','Problem and who it helps'],[1.5,'1.5 min','Approach'],[3,'3 min','Live demo'],[1,'1 min','Value and responsible use'],[0.5,'30 s','Key learning'],[3,'3 min','Judge Q&A','q']];
+const awards=[['Hackathon winner and runner-up','Each track'],['Best Clinical Impact','Technical'],['Safest AI','Technical'],['Most Practical AI Use Case','Non-technical'],['Quiz Champion','Each track'],['Best "AI in My Daily Work"','Everyone'],['People\'s Choice','Everyone']];
+const quiz=[
+ {q:'A colleague wants Copilot to summarise a real patient\'s discharge summary. Is that OK during the program?',o:['Yes, Copilot is a company tool','Only if the name is removed','No. Use synthetic or approved sample data only'],a:2,w:'Removing a name is not enough to de-identify a record. Throughout the program, use only synthetic or approved sample data.'},
+ {q:'An AI answer looks confident and even includes a citation. What do you do?',o:['Use it, since it has a source','Check the facts and open the citation','Ask the AI if it is sure'],a:1,w:'AI tools can invent facts and citations that look real. Open the source and check the numbers yourself.'},
+ {q:'Which prompt will get a better result?',o:['"Write an email about the policy change."','"Write a 120-word email to all staff explaining the new leave policy starts 1 Jan. Friendly tone, 3 bullet points, end with who to contact."'],a:1,w:'Give the AI the audience, the goal, the format and the tone. Specific prompts get specific answers.'},
+ {q:'AI helped you write code or a report. Who is responsible for it?',o:['The AI tool','You are','Whoever reviews it'],a:1,w:'AI helps you do the work, but you own the result and are accountable for what you share or ship.'}
+];
+const faqs=[
+ ['Do I need to know how to code?','No. The non-technical track uses Microsoft Copilot and no-code agents. The technical track is for people who code already, in any language; you will use Python with AI helping you.'],
+ ['Do I have to attend every session?','No, but live attendance earns more quiz points. Every session is recorded and posted the same day, and you can take the quiz later for catch-up points.'],
+ ['Can I join sessions from the other track?','Yes. Technical and non-technical sessions are at different times so you can attend both.'],
+ ['Which AI tools can I use?','The approved list is confirmed by IT before AI Week and shared in the setup guide. Technical: GitHub Copilot, Claude and LLM API keys. Non-technical: Microsoft 365 Copilot. Don\'t put company data into any other tool.'],
+ ['How are hackathon teams formed?','The organizers form teams from your registration answers so each team mixes skills and departments. Teams are announced on Mon 7 Dec.'],
+ ['Can I see the hackathon problems in advance?','No. Every team gets them at the same time, at the 09:00 kickoff on Mon 14 Dec. Practice week prepares you for the kind of work involved.'],
+ ['Where are the in-person days?','At the office. The venue, rooms and catering details are shared with registered participants before 14 Dec.'],
+ ['What happens after the event?','A 30-day AI adoption challenge starts at the showcase, so you keep using what you learned in your daily work.']
+];
+
+/* ---------- Helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- Light / dark toggle ---------- */
+{
+  const root=document.documentElement;
+  const saved=store.get('openhouse.theme');
+  if(saved==='light'||saved==='dark')root.setAttribute('data-theme',saved);
+  const isDark=()=>{const t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;};
+  const label=()=>$('#themeBtn').setAttribute('aria-label',isDark()?'Switch to light mode':'Switch to dark mode');
+  label();
+  $('#themeBtn').addEventListener('click',()=>{const next=isDark()?'light':'dark';root.setAttribute('data-theme',next);store.set('openhouse.theme',next);label();});
+}
+
+/* ---------- Journey ---------- */
+let sel=0;
+function renderJourney(){
+  const now=Date.now();
+  let cur=stops.findIndex(s=>now<=new Date(s.end).getTime());
+  $('#journeyStops').innerHTML=stops.map((s,i)=>{
+    const st=now>new Date(s.end).getTime()?'past':(i===cur?'now':'');
+    return `<button type="button" class="stop ${st}" role="tab" id="stop${i}" aria-selected="${i===sel}" data-i="${i}"><span class="dot"></span><span class="d">${s.d}</span><span class="n">${s.n}</span><span class="mode ${s.m==='In person'?'ip':''}">${s.m}</span></button>`}).join('');
+  const s=stops[sel];
+  $('#stopDetail').innerHTML=`<div><p class="meta">${s.d} · ${s.m}</p><h3>${s.n}</h3><p class="lead" style="font-size:.95rem">${s.side}</p></div><ul>${s.body.map(b=>`<li>${b}</li>`).join('')}</ul>`;
+}
+$('#journeyStops').addEventListener('click',e=>{const b=e.target.closest('.stop');if(!b)return;sel=+b.dataset.i;renderJourney();});
+{const now=Date.now();const c=stops.findIndex(s=>now<=new Date(s.end).getTime());sel=c<0?stops.length-1:c;}
+
+/* ---------- Track ---------- */
+let track=store.get('openhouse.track')==='non'?'non':'tech';
+function bar(el,segs,cls){el.innerHTML=segs.map(s=>`<div class="${s[3]||''}" style="flex:${s[0]} 1 0"><b>${s[1]}</b>${s[2]}</div>`).join('')}
+function renderTrack(){
+  const t=tracks[track];
+  document.querySelectorAll('.switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.track===track));
+  $('#trackWho').textContent=t.who;
+  $('#sessions').innerHTML=t.sessions.map((s,i)=>`<article class="sess"><div class="when"><b>${s[0]}</b>${s[1]} · 75 min</div><div><h3>${esc(s[2])}</h3><p>${esc(s[3])}</p><p class="try"><b>Try it</b>${esc(s[4])}</p></div><span class="num">${String(i+1).padStart(2,'0')}</span></article>`).join('');
+  $('#tools').innerHTML=t.tools.map(x=>`<div class="tool"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join('')+t.aware.map(x=>`<div class="tool aware" style="grid-column:1/-1"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join('');
+  $('#packTitle').textContent=(track==='tech'?'Technical':'Non-technical')+' practice pack';
+  $('#pack').innerHTML=t.pack.map(p=>`<li>${esc(p)}</li>`).join('');
+  $('#deliv').innerHTML=t.deliv.map(d=>`<div class="card"><p class="eyebrow">${d[0]}</p><p style="color:var(--fg)">${esc(d[1])}</p></div>`).join('');
+  $('#rubLead').textContent=t.rubLead+' Showing the '+(track==='tech'?'technical':'non-technical')+' track; switch tracks in AI Week to see the other.';
+  $('#rubric').innerHTML=t.rubric.map(r=>`<div class="rrow"><span class="lbl">${esc(r[0])}</span><span class="val">${r[1]}</span><span class="bar"><i style="width:0" data-w="${r[1]/30*100}"></i></span><span class="hint">${esc(r[2])}</span></div>`).join('');
+  requestAnimationFrame(()=>document.querySelectorAll('#rubric i').forEach(i=>i.style.width=i.dataset.w+'%'));
+}
+document.querySelector('.switch').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;track=b.dataset.track;store.set('openhouse.track',track);renderTrack();});
+
+/* ---------- Static blocks ---------- */
+bar($('#anat'),anat);
+$('#points').innerHTML=points.map(p=>`<tr><td>${esc(p[0])}</td><td class="pts">${p[1]}</td></tr>`).join('');
+$('#oh').innerHTML=oh.map(o=>`<div><b>${o[0]}</b><span>${o[1]} · 60 min online</span></div>`).join('');
+const dayline=(el,rows)=>el.innerHTML=rows.map(r=>`<li class="${r[2]?'hl':''}"><span class="t">${r[0]}</span><span class="pin"></span><span class="w">${esc(r[1])}</span></li>`).join('');
+dayline($('#hackDay'),hackDay);dayline($('#showDay'),showDay);
+bar($('#pres'),pres);
+const trophy='<svg viewBox="0 0 34 34" fill="none" stroke="var(--amber)" stroke-width="1.8"><path d="M11 5h12v8a6 6 0 0 1-12 0z"/><path d="M11 7H6v2a5 5 0 0 0 5 5M23 7h5v2a5 5 0 0 1-5 5M17 19v5M12 29h10M13.5 24h7v5h-7z"/></svg>';
+$('#awards').innerHTML=awards.map(a=>`<div class="award">${trophy}<div><b>${esc(a[0])}</b><span>${a[1]}</span></div></div>`).join('');
+$('#faqList').innerHTML=faqs.map(f=>`<details class="faq"><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('');
+
+/* ---------- Registration ---------- */
+if(REGISTER_URL){$('#regBtn').href=REGISTER_URL;$('#regBtn').target='_blank';$('#regBtn').rel='noopener';$('#regNote').textContent='Opens in a new tab';}
+else{$('#regNote').textContent='The form link is in the announcement email and the Teams post.';}
+
+/* ---------- Quiz ---------- */
+let qi=0,score=0,answered=false;
+function renderQuiz(){
+  const box=$('#quizBox');
+  if(qi>=quiz.length){
+    const msg=score===quiz.length?'Perfect. You\'re ready to walk in.':score>=2?'Good start. AI Week will fill in the rest.':'That\'s what AI Week is for. See you on 1 Dec.';
+    box.innerHTML=`<div class="qhead"><span class="eyebrow">Your result</span><span class="qprog">${score} / ${quiz.length}</span></div><p class="qtext">${msg}</p><div class="qnav"><button type="button" class="btn line" id="qRestart">Try again</button><a class="btn solid" href="#register">Register</a></div>`;
+    $('#qRestart').onclick=()=>{qi=0;score=0;renderQuiz();};return;
+  }
+  const q=quiz[qi];answered=false;
+  box.innerHTML=`<div class="qhead"><span class="eyebrow">Question ${qi+1}</span><span class="qprog">${qi+1} of ${quiz.length} · score ${score}</span></div><p class="qtext">${esc(q.q)}</p><div class="opts">${q.o.map((o,i)=>`<button type="button" class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div><p class="why" hidden id="qWhy"></p><div class="qnav"><button type="button" class="btn solid" id="qNext" hidden>${qi===quiz.length-1?'See result':'Next question'}</button></div>`;
+  box.querySelector('.opts').onclick=e=>{
+    const b=e.target.closest('.opt');if(!b||answered)return;answered=true;
+    const i=+b.dataset.i;if(i===q.a)score++;
+    box.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add('right');else if(j===i)x.classList.add('wrong');});
+    const w=$('#qWhy');w.textContent=(i===q.a?'Correct. ':'Not quite. ')+q.w;w.hidden=false;
+    const n=$('#qNext');n.hidden=false;n.focus();
+  };
+  $('#qNext').onclick=()=>{qi++;renderQuiz();};
+}
+
+/* ---------- Countdown ---------- */
+function tick(){
+  const now=Date.now();
+  const m=milestones.find(x=>new Date(x[1]).getTime()>now);
+  if(!m){$('#cdWhat').textContent='Thanks for coming. See you in the 30-day challenge.';['D','H','M','S'].forEach(k=>$('#cd'+k).textContent='0');return;}
+  $('#cdWhat').textContent=m[0];
+  let s=Math.max(0,Math.floor((new Date(m[1]).getTime()-now)/1000));
+  const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const mi=Math.floor(s/60);s%=60;
+  $('#cdD').textContent=d;$('#cdH').textContent=String(h).padStart(2,'0');$('#cdM').textContent=String(mi).padStart(2,'0');$('#cdS').textContent=String(s).padStart(2,'0');
+}
+
+/* ---------- Hero network ---------- */
+function net(){
+  const c=$('#net'),x=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,dpr,nodes=[],mouse={x:-999,y:-999};
+  function size(){dpr=Math.min(2,devicePixelRatio||1);W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(90,W*H/11000));nodes=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:1+Math.random()*1.8}));}
+  function door(){ /* the open doorway of light, right side */
+    const dw=Math.min(220,W*.22),dh=H*.78,dx=W*.78-dw/2,dy=H-dh;
+    const g=x.createLinearGradient(dx,dy,dx,H);g.addColorStop(0,'rgba(255,181,71,.10)');g.addColorStop(1,'rgba(255,181,71,.02)');
+    x.fillStyle=g;x.fillRect(dx,dy,dw,dh);
+    const beam=x.createLinearGradient(dx,0,dx-W*.35,0);beam.addColorStop(0,'rgba(255,181,71,.07)');beam.addColorStop(1,'rgba(255,181,71,0)');
+    x.fillStyle=beam;x.beginPath();x.moveTo(dx,dy);x.lineTo(dx-W*.4,H);x.lineTo(dx+dw,H);x.lineTo(dx+dw,dy);x.closePath();x.fill();
+    x.strokeStyle='rgba(255,181,71,.35)';x.lineWidth=1.5;x.strokeRect(dx+.5,dy+.5,dw-1,dh);
+    return {dx,dw};
+  }
+  function frame(){
+    x.clearRect(0,0,W,H);const {dx,dw}=door();
+    for(const p of nodes){
+      if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+        const mdx=mouse.x-p.x,mdy=mouse.y-p.y,md=Math.hypot(mdx,mdy);if(md<140){p.x+=mdx*.004;p.y+=mdy*.004;}}
+    }
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+      const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<120){const warm=(a.x>dx-60&&a.x<dx+dw+60);x.strokeStyle=warm?`rgba(255,181,71,${(1-d/120)*.35})`:`rgba(95,208,211,${(1-d/120)*.25})`;x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}
+    }
+    for(const p of nodes){const warm=(p.x>dx-60&&p.x<dx+dw+60);x.fillStyle=warm?'rgba(255,196,110,.9)':'rgba(140,225,228,.75)';x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();}
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  size();addEventListener('resize',()=>{size();if(reduce)frame();});
+  c.parentElement.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  c.parentElement.addEventListener('pointerleave',()=>{mouse.x=mouse.y=-999});
+  frame();
+}
+
+renderJourney();renderTrack();renderQuiz();tick();setInterval(tick,1000);net();
+</script>
