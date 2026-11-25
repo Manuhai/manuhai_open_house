@@ -363,7 +363,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     </div>
     <div>
       <h3>"AI in My Daily Work" challenge</h3>
-      <p class="lead" style="font-size:.95rem;margin:6px 0 14px">Pick one real, repetitive task from your job and redo it with AI. Share a short write-up by Fri 11 Dec for 30 points and a shot at its own award.</p>
+      <p class="lead" style="font-size:.95rem;margin:6px 0 14px">Pick one real, repetitive task from your job and redo it with AI. Share a short write-up by Fri 11 Dec for 30 leaderboard points.</p>
       <ol class="pack">
         <li>The task and how you do it today</li>
         <li>How you did it with AI, and the prompts you used</li>
@@ -537,7 +537,7 @@ const oh=[['Mon 7 Dec','Office hours'],['Wed 9 Dec','Office hours'],['Fri 11 Dec
 const hackDay=[['08:30','Check-in, breakfast, laptop and Wi-Fi check'],['09:00','Kickoff: problems revealed, guidelines, rubric',1],['09:45','Teams pick one problem'],['10:00','Build, with a mentor check-in from 11:30'],['12:30','Lunch'],['13:15','Build, with a 2-minute status per team at 14:30'],['15:00','Polish, test and prepare slides'],['17:30','Submission deadline',1]];
 const showDay=[['09:30','Opening and judges introduced'],['09:45','Technical track presentations',1],['11:05','Non-technical track presentations',1],['12:00','Lunch while judges finalize scores'],['12:45','Key takeaways from the program'],['13:20','Awards',1],['13:55','30-day challenge launch and feedback'],['14:15','Thank-you and group photo']];
 const pres=[[1,'1 min','Problem and who it helps'],[1.5,'1.5 min','Approach'],[3,'3 min','Live demo'],[1,'1 min','Value and responsible use'],[0.5,'30 s','Key learning'],[3,'3 min','Judge Q&A','q']];
-const awards=[['Hackathon winner and runner-up','Each track'],['Best Clinical Impact','Technical'],['Safest AI','Technical'],['Most Practical AI Use Case','Non-technical'],['Quiz Champion','Each track'],['Best "AI in My Daily Work"','Everyone'],['People\'s Choice','Everyone']];
+const awards=[['Winner','Technical and non-technical track'],['Runner-up','Technical and non-technical track']];
 const quiz=[
  {q:'A colleague wants Copilot to summarise a real patient\'s discharge summary. Is that OK during the program?',o:['Yes, Copilot is a company tool','Only if the name is removed','No. Use synthetic or approved sample data only'],a:2,w:'Removing a name is not enough to de-identify a record. Throughout the program, use only synthetic or approved sample data.'},
  {q:'An AI answer looks confident and even includes a citation. What do you do?',o:['Use it, since it has a source','Check the facts and open the citation','Ask the AI if it is sure'],a:1,w:'AI tools can invent facts and citations that look real. Open the source and check the numbers yourself.'},
